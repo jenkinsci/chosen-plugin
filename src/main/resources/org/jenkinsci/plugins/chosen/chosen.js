@@ -962,3 +962,12 @@ Copyright (c) 2011 by Harvest
   root.get_side_border_padding = get_side_border_padding;
 
 }).call(this);
+
+
+
+//// addition in Jenkins
+Behaviour.register({
+    "SELECT.chosen" : function(e) {
+        new Chosen(e);
+    }
+});
