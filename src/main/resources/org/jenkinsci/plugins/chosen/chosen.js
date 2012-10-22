@@ -969,5 +969,8 @@ Copyright (c) 2011 by Harvest
 Behaviour.register({
     "SELECT.chosen" : function(e) {
         new Chosen(e);
+        YAHOO.util.Event.addListener(e,'filled',function(ev) {
+            Event.fire(e,"liszt:updated");
+        });
     }
 });
