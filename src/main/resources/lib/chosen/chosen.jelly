@@ -1,0 +1,56 @@
+<!--
+The MIT License
+
+Copyright (c) 2012, CloudBees, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <st:documentation>
+    Glorified &lt;select> control rendered via the 'Chosen' JavaScript library.
+
+    <st:attribute name="clazz">
+      Additional CSS classes that the control gets.
+    </st:attribute>
+    <st:attribute name="field" use="required">
+      Used for databinding.
+    </st:attribute>
+    <st:attribute name="default">
+      The default value of the text box, in case both @value is and 'instance[field]' is null.
+    </st:attribute>
+  </st:documentation>
+
+  <f:prepareDatabinding/>
+  <st:adjunct includes="org.jenkinsci.plugins.chosen.chosen"/>
+  <!-- TODO: how do I delegate to <f:select/> with 'chosen' added to the CSS class? -->
+
+  ${descriptor.calcFillSettings(field,attrs)} <!-- this figures out the 'fillUrl' and 'fillDependsOn' attribute -->
+  <j:set var="value" value="${instance[attrs.field] ?: attrs.default}" />
+  <m:select xmlns:m="jelly:hudson.util.jelly.MorphTagLibrary"
+         class="setting-input ${attrs.checkUrl!=null?'validated':''} select chosen ${attrs.clazz}"
+         name="${attrs.field}"
+         value="${value}"
+         ATTRIBUTES="${attrs}" EXCEPT="field clazz">
+    <j:if test="${value!=null}">
+      <option value="${value}">${value}</option>
+    </j:if>
+  </m:select>
+</j:jelly>
