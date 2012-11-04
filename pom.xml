@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.488-SNAPSHOT</version><!-- because of the 'filled' event -->
+    <version>1.488</version><!-- because of the 'filled' event -->
   </parent>
 
   <groupId>org.jenkins-ci.plugins</groupId>
